@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>element-ts</title>
+	<link href="./css/index.css" rel="stylesheet"/>
+	<link href="./css/prism.css" rel="stylesheet"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+	<header>
+		<img src="./img/atom.png">
+		<div class="title">
+			<h1>element-ts</h1>
+			<p>A suite of developer tools written in TypeScript.</p>
+		</div>
+		<a class="githubLogoLink" href="https://github.com/element-ts" target="_blank">
+			<ion-icon class="githubLogo" name="logo-github"></ion-icon>
+		</a>
+	</header>
+	<main>
+		<section class="repo">
+			<div class="header">
+				<a class="githubLogoLink" href="https://github.com/element-ts/hydrogen" target="_blank"><ion-icon name="link-outline"></ion-icon></a>
+				<h2>hydrogen</h2>
+			</div>
+			<p>
+				Hydrogen is a jack of all trades for managing APIs. You can get a big project off the ground
+				quickly with its ease of use and vast functionality.
+			</p>
+			<pre><code class="language-ts">
+import {HEndpointGroup,
+		HHTTPServer,
+		HRequest,
+		HResponse,
+		StandardType
+} from "@element-ts/hydrogen";
+
+const rootEndpoint: HEndpointGroup = new HEndpointGroup();
+const userEndpoint: HEndpointGroup = new HEndpointGroup();
+
+userEndpoint.post("/sign-up", {
+    handler: async(req: HRequest, res: HResponse): Promise<void> => {
+
+	const body: {name: string, age: number} = req.getBody();
+	res.send({id: "xxx", name: body.name});
+
+    },
+    types: {
+	name: StandardType.STRING,
+	age: StandardType.NUMBER
+    }
+});
+
+rootEndpoint.get("/hello", async(req: HRequest, res: HResponse) => {
+    res.sendFile("/path-to-file");
+});
+
+rootEndpoint.attach("/user", userEndpoint);
+
+new HHTTPServer(rootEndpoint).start(3000);
+			</code></pre>
+		</section>
+		<section class="repo">
+			<div class="header">
+				<a class="githubLogoLink" href="https://github.com/element-ts/silicon" target="_blank"><ion-icon name="link-outline"></ion-icon></a>
+				<h2>silicon</h2>
+			</div>
+			<p>
+				Silicon is a MongoDB driver. It wraps the official driver provided by MongoDB found here on NPM.
+				Silicon simplifies many processes by providing a type-safe object-oriented wrapper of the
+				MongoDB driver. Also included in silicon is a powerful type-safe query driver.
+			</p>
+			<pre><code class="language-ts">
+import {SiObject} from "@element-ts/silicon";
+
+interface UserProps { name: string; age: number; }
+class User extends SiObject<UserProps> {
+
+    public constructor() { super("table-name"); }
+
+}
+
+const user: User = new User();
+user.props.name = "Elijah";
+user.props.age = 21;
+
+await user.create();
+await user.update();
+await user.update("name");
+await user.fetch();
+await user.delete();
+			</code></pre>
+		</section>
+		<section class="repo">
+			<div class="header">
+				<a class="githubLogoLink" href="https://github.com/element-ts/krypton" target="_blank"><ion-icon name="link-outline"></ion-icon></a>
+				<h2>krypton</h2>
+			</div>
+			<p>
+				A very light weight package written in Typescript combining node/crypto and bcrypt
+				for some helpful methods.
+			</p>
+			<pre><code class="language-ts">
+import {
+    KrBcrypt,
+    KrHash,
+    KrHashAlgorithm,
+    KrRSA,
+    KrRSAKeyPair
+} from "element-ts/krypton";
+
+// KrBcrypt
+const password: string = "1234";
+const createdPassword: Buffer = await KrBcrypt.createPassword(password);
+const checkPassword: boolean = await KrBcrypt.verifyPassword(
+    password,
+    createdPassword
+);
+
+// KrHash
+const hashedData: Buffer = KrHash.hash(Buffer.from("Hello, world!");
+const hashedData: Buffer = KrHash.hash(Buffer.from(
+    "Hello, world!",
+    KrHashAlgorithm.sha512
+));
+const hasher: KrHash = new KrHash()
+hasher.append(Buffer.from("Hello"));
+hasher.append(Buffer.from("World"));
+const hashedData: Buffer = hasher.hash();
+
+// KrCipher
+const cipher: KrCipher = new KrCipher(Buffer.from("password"));
+const msg: Buffer = Buffer.from("Hello, world!");
+const encryptedData: Buffer = cipher.encrypt(msg);
+const decryptedData: Buffer = cipher.decrypt(encryptedData);
+console.log(msg === decryptedData);
+
+// KrRSA
+const keys: KrRSAKeyPair = KrRSA.generateKeys();
+const message: string = "Hello, world!";
+const dataUnEncrypted: Buffer = Buffer.from(message);
+const dataEncrypted: Buffer = KrRSA.encrypt(
+    dataUnEncrypted,
+    keys.publicKey
+);
+const dataDecrypted: Buffer = KrRSA.decrypt(
+    dataEncrypted,
+    keys.privateKey
+);
+const messageDecrypted: string = dataDecrypted.toString("utf8");
+			</code></pre>
+		</section>
+		<section class="repo">
+			<div class="header">
+				<a class="githubLogoLink" href="https://github.com/element-ts/palladium" target="_blank"><ion-icon name="link-outline"></ion-icon></a>
+				<h2>palladium</h2>
+			</div>
+			<p>
+				A type-safe promise based http/s request library.
+			</p>
+			<pre><code class="language-ts">
+import {
+    PdRequest,
+    PdResponse,
+    PdMethod
+} from "@element-ts/palladium";
+
+const req: PdRequest = new PdRequest();
+req.setUrl("https://myapi.com/users");
+req.setMethod(PdMethod.Get);
+
+const res: PdResponse = await req.request();
+const obj: object | undefined = res.getJSON();
+const status: number = res.statusCode;
+			</code></pre>
+		</section>
+		<section class="repo">
+			<div class="header">
+				<a class="githubLogoLink" href="https://github.com/element-ts/lithium" target="_blank"><ion-icon name="link-outline"></ion-icon></a>
+				<h2>lithium</h2>
+			</div>
+			<p>
+				A type-safe promise based websocket package.
+			</p>
+			<pre><code class="language-ts">
+// coming soon...
+			</code></pre>
+		</section>
+	</main>
+	<footer>
+
+	</footer>
+</body>
+<script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+<script src="./js/prism.js"></script>
+</html>
