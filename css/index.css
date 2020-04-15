@@ -101,6 +101,21 @@ pre {
   border-radius: 20px;
 }
 
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+footer a {
+  text-decoration: none;
+  color: dodgerblue;
+  transition: font-size 250ms ease-in-out;
+}
+footer a:hover {
+  font-size: 1.5em;
+}
+
 @media (prefers-color-scheme: dark) {
   body {
     background-color: black;

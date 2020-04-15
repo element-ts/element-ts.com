@@ -122,6 +122,24 @@ pre {
 	}
 }
 
+footer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 40px;
+
+	a {
+		text-decoration: none;
+		color: dodgerblue;
+		transition: font-size 250ms ease-in-out;
+	}
+
+	a:hover {
+		font-size: 1.5em;
+	}
+
+}
+
 @media (prefers-color-scheme: dark) {
 	body {
 		background-color: black;
