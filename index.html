@@ -42,13 +42,13 @@ const userEndpoint: HEndpointGroup = new HEndpointGroup();
 userEndpoint.post("/sign-up", {
     handler: async(req: HRequest, res: HResponse): Promise<void> => {
 
-	const body: {name: string, age: number} = req.getBody();
-	res.send({id: "xxx", name: body.name});
+	    const body: {name: string, age: number} = req.getBody();
+	    res.send({id: "xxx", name: body.name});
 
     },
     types: {
-	name: StandardType.STRING,
-	age: StandardType.NUMBER
+	    name: StandardType.STRING,
+	    age: StandardType.NUMBER
     }
 });
 
