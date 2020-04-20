@@ -181,15 +181,68 @@ const status: number = res.statusCode;
 				<h2>lithium</h2>
 			</div>
 			<p>
-				A type-safe promise based websocket package.
+				A type-safe remote function invocation library using websockets and TypeScript.
 			</p>
 			<pre><code class="language-ts">
-// coming soon...
+import {
+    LiCommandRegistryStructure,
+    LiSocket,
+    LiServer
+} from "@element-ts/lithium";
+
+export interface MyServerCommands extends LiCommandRegistryStructure {
+    changeFavoriteNumber: {
+    	param: number;
+        return: void;
+    };
+    getFavoriteColor: {
+        param: void;
+        return: number;
+    };
+}
+
+export interface MyClientCommands extends LiCommandRegistryStructure {
+    favoriteNumberChanged: {
+        param: number;
+        return: void;
+    };
+}
+
+// Client Side
+const server: LiServer<MyServerCommands, MyClientCommands> = new LiServer({
+    port: 8080,
+    debug: true
+});
+
+let favoriteNumber: number = 42;
+
+server.implement("getFavoriteColor", async(): Promise<number> => {
+    return favoriteNumber;
+});
+
+server.implement("changeFavoriteNumber", async(num: number): Promise<void> => {
+    favoriteNumber = num;
+    await server.broadcast("favoriteNumberChanged", favoriteNumber);
+});
+
+// Client Side
+const socket: LiSocket<MyClientCommands, MyServerCommands> = await LiSocket.init({
+    address: "ws://localhost:8080",
+    debug: true
+});
+
+socket.implement("favoriteNumberChanged", async(num: number): Promise<void> => {
+    console.log(`Favorite number is now: ${num}!`);
+    await socket.invoke("changeFavoriteNumber", num + 1);
+});
+
+await socket.invoke("changeFavoriteNumber", 0);
 			</code></pre>
 		</section>
 	</main>
 	<footer>
 		<p>Written by <a href="https://elijahcobb.com" target="_blank">Elijah Cobb.</a></p>
+		<div>Icon made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 	</footer>
 </body>
 <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
