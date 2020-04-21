@@ -154,30 +154,6 @@ const messageDecrypted: string = dataDecrypted.toString("utf8");
 		</section>
 		<section class="repo">
 			<div class="header">
-				<a class="githubLogoLink" href="https://github.com/element-ts/palladium" target="_blank"><ion-icon name="link-outline"></ion-icon></a>
-				<h2>palladium</h2>
-			</div>
-			<p>
-				A type-safe promise based http/s request library.
-			</p>
-			<pre><code class="language-ts">
-import {
-    PdRequest,
-    PdResponse,
-    PdMethod
-} from "@element-ts/palladium";
-
-const req: PdRequest = new PdRequest();
-req.setUrl("https://myapi.com/users");
-req.setMethod(PdMethod.Get);
-
-const res: PdResponse = await req.request();
-const obj: object | undefined = res.getJSON();
-const status: number = res.statusCode;
-			</code></pre>
-		</section>
-		<section class="repo">
-			<div class="header">
 				<a class="githubLogoLink" href="https://github.com/element-ts/lithium" target="_blank"><ion-icon name="link-outline"></ion-icon></a>
 				<h2>lithium</h2>
 			</div>
@@ -238,6 +214,60 @@ socket.implement("favoriteNumberChanged", async(num: number): Promise<void> => {
 });
 
 await socket.invoke("changeFavoriteNumber", 0);
+			</code></pre>
+		</section>
+		<section class="repo">
+			<div class="header">
+				<a class="githubLogoLink" href="https://github.com/element-ts/palladium" target="_blank"><ion-icon name="link-outline"></ion-icon></a>
+				<h2>palladium</h2>
+			</div>
+			<p>
+				A type-safe promise based http/s request library.
+			</p>
+			<pre><code class="language-ts">
+import {
+    PdRequest,
+    PdResponse,
+    PdMethod
+} from "@element-ts/palladium";
+
+const req: PdRequest = new PdRequest();
+req.setUrl("https://myapi.com/users");
+req.setMethod(PdMethod.Get);
+
+const res: PdResponse = await req.request();
+const obj: object | undefined = res.getJSON();
+const status: number = res.statusCode;
+			</code></pre>
+		</section>
+		<section class="repo">
+			<div class="header">
+				<a class="githubLogoLink" href="https://github.com/element-ts/neon" target="_blank"><ion-icon name="link-outline"></ion-icon></a>
+				<h2>neon</h2>
+			</div>
+			<p>
+				Neon is a simple package the provides really helpful logging. With even just the default options, Neon
+				makes console.log() look like a smudge on a rock. It provides the type of the logged value, the stack
+				it came from, and prints using the colors package.
+			</p>
+			<pre><code class="language-ts">
+import {Neon} from "@element-ts/neon";
+
+Neon.enable();
+
+Neon.setTitle("MyLogger");
+Neon.log("Hello from MyLogger.");
+Neon.clearTitle();
+Neon.log("Hello, world!");
+Neon.log(1223456789);
+Neon.log(true);
+Neon.log({foo: "bar"});
+Neon.log([1, 2, 3]);
+Neon.log(Buffer.from("Hello, world!"));
+
+Neon.err("AHHHH!");
+Neon.err(new Error("WHOA WHOA!"));
+Neon.err("AHHHH!", true);
 			</code></pre>
 		</section>
 	</main>
